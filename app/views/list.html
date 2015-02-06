@@ -1,0 +1,19 @@
+<div>
+    list.html<br/>
+    {{name}}
+
+    <table style="width : 90%;" class="table-striped table-bordered">
+        <thead>
+            <th>Name</th>
+            <th>Owners</th>
+            <th>Created On</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="board in boards">
+                <td>{{board.name}}</td>
+                <td>{{board.owners.toString()}}</td>
+                <td>{{board.createdOn | date}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
