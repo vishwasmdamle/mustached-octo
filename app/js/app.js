@@ -1,11 +1,5 @@
 {
-    var app = angular.module('SampleAngularApp', ['ngRoute', 'controllers'])
-        .directive('navigation', function () {
-            return {
-                restrict: 'E',
-                templateUrl: 'views/navigation.html'
-            }
-        })
+    var app = angular.module('SampleAngularApp', ['ngRoute', 'controllers', 'directives'])
         .config(['$routeProvider',
             function ($routeProvider) {
                 $routeProvider.
@@ -13,9 +7,22 @@
                         templateUrl: 'views/list.html',
                         controller: 'ListController'
                     }).
+                    when('/userHome', {
+                        templateUrl: 'views/list.html',
+                        controller: 'ListController',
+                        caseInsensitiveMatch: true
+                    }).
                     when('/login', {
                         templateUrl: 'views/login.html',
                         controller: 'LoginController'
+                    }).
+                    when('/logout', {
+                        templateUrl: 'views/login.html',
+                        controller: 'LoginController'
+                    }).
+                    when('/board/:id', {
+                        templateUrl: 'views/board.html',
+                        controller: 'BoardController',
                     }).
                     when('/signUp', {
                         templateUrl: 'views/signUp.html',
@@ -23,7 +30,7 @@
                         caseInsensitiveMatch: true
                     }).
                     otherwise({
-                        redirectTo: '/list'
+                        redirectTo: '/home'
                     });
             }]);
 }

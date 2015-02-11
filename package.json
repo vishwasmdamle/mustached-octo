@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "*",
     "mongoose": "*",
+    "bcrypt": "*",
     "body-parser": "*"
   }
 }

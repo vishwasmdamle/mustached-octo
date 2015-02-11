@@ -1,0 +1,27 @@
+<div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+            <a ng-repeat="list in board.lists">
+                <div class="board overlap col-md-2" title="{{list.name}}">
+                    {{list.name}}
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 sidebar bg-{{board.class ? board.class : 'primary'}}">
+            <div class="row">
+                <div class="col-lg-12 center" title="{{board.name}}"><h4 class="overlap"><b>{{board.name}}</b></h4></div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 overlap"><b>Owners:</b></div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 overlap">{{board.owners.toString()}}</div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 overlap"><b>Members:</b></div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 overlap">{{board.members.toString()}}</div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 overlap"><b>Created On:</b></div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 overlap">{{board.createdOn | date : 'dd MMM yyyy, h:mm a'}}</div>
+            </div>
+        </div>
+
+    </div>
+</div>

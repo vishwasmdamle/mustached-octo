@@ -1,9 +1,25 @@
-
+encryption =  require('../authentication.js');
 exports.initModel = function() {
-    mongoose.model('Board', {name : String, lists : Object, owners : Object, createdOn : Date}, 'content');
-    content = mongoose.model('Board');
+    mongoose.model('User', {name : String, username : String, password : String}, 'user');
+    user = mongoose.model('User');
 }
 
-exports.findAll = function(callback1) {
-     content.find(function(err, data){callback1(data);});
- }
+exports.authenticate = function(username, password, success, failure) {
+       user.find({username : username},
+        function(err, data){
+            if(data.length > 0) {
+                if(encryption.compare(password, data[0].password)) {
+                    userData = data[0].toObject();
+                    delete userData.password;
+                    success(userData);
+                    return;
+                }
+                if(failure)failure(err);
+            }
+            else {
+                if(failure)
+                    failure(err);
+            }
+        }
+    );
+}

@@ -1,19 +1,71 @@
 <div>
-    list.html<br/>
-    {{name}}
+    <div id="example1" style="margin:2%;width:90%" class="row">
+        <h1>Boards</h1>
+        <a ng-repeat="board in boards" href="#/board/{{board._id}}">
+            <div class="board overlap col-md-2 label img-rounded label-{{board.class ? board.class : 'primary'}}"
+                 title="{{board.name}}">
+                {{board.name}}
+            </div>
+        </a>
+        <a ng-click="showModal = !showModal" href>
+            <div class="board col-md-1 label  img-rounded label-success" title="Create New Board">+</div>
+        </a>
+    </div>
 
-    <table style="width : 90%;" class="table-striped table-bordered">
-        <thead>
-            <th>Name</th>
-            <th>Owners</th>
-            <th>Created On</th>
-        </thead>
-        <tbody>
-            <tr ng-repeat="board in boards">
-                <td>{{board.name}}</td>
-                <td>{{board.owners.toString()}}</td>
-                <td>{{board.createdOn | date}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <modal title="Create New Board" visible="showModal">
+        <div>
+            <form role="form" name="createBoardForm" novalidate method="post">
+                <div class="form-group">
+                    <label class="sr-only">Board Name</label>
+                    <input type="text" class="form-control input-lg" placeholder="Type In Board Name"
+                           ng-model="newBoard.name" required/>
+                </div>
+
+                <label>Owners :</label>
+
+                <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    <span ng-repeat="owner in newBoard.owners">{{owner}}<br/></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-lg" placeholder="Type In Username"
+                               ng-model="newBoard.newOwner">
+
+                        <div class="input-group-btn">
+                            <button ng-disabled="!newBoard.newOwner" ng-click="addOwnerOrMember('owner')"
+                                    class="btn btn-success input-lg">&nbsp;+&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <label>Members :</label>
+
+                <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    <span ng-repeat="member in newBoard.members">{{member}}<br/></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-lg" placeholder="Type In Username"
+                               ng-model="newBoard.newMember">
+
+                        <div class="input-group-btn">
+                            <button ng-disabled="!newBoard.newMember" ng-click="addOwnerOrMember('member')"
+                                    class="btn btn-success input-lg">&nbsp;+&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="form-control btn btn-primary input-lg" ng-click="createBoard()"
+                           value="Create"/>
+                </div>
+                <div ng-show="error" class="label-danger input-lg">
+                    {{error}}
+                </div>
+            </form>
+        </div>
+    </modal>
 </div>
+
