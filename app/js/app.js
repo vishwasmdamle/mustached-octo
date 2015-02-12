@@ -21,7 +21,7 @@
                         controller: 'LoginController'
                     }).
                     when('/board/:id', {
-                        templateUrl: 'views/board.html',
+                        templateUrl: 'views/Board.html',
                         controller: 'BoardController',
                     }).
                     when('/signUp', {

@@ -1,5 +1,5 @@
 'use strict';
-var server, serverService, dbService, bodyParser, users, data, encryption;
+var server, serverService, dbService, bodyParser, users, board, encryption;
 var main = function () {
     exports.app = require('./app');
     exports.path = require('path');
@@ -9,24 +9,24 @@ var main = function () {
     bodyParser = require('body-parser');
     dbService = require('./mongoose.js');
     dbService = require('./mongoose.js');
-    data = require('./model/data.js');
+    board = require('./model/board.js');
     users = require('./model/users.js');
     dbService = require('./model/users.js');
     encryption = require('./authentication.js');
 
     server = serverService.initServer();
 
-    server.get('/data', function(req, res) {
+    server.get('/board', function(req, res) {
         if(!req.query)
-            data.findAll(function(data){res.send(data);});
+            board.findAll(function(data){res.send(data);});
         else
-            data.query(req.query, function(data){res.send(data);})
+            board.query(req.query, function(data){res.send(data);})
     });
-    server.post('/data',
+    server.post('/board',
         function(req, res) {
             console.log(req.body);
             if(req.body && req.body.name && req.body.createdOn && req.body.members && req.body.owners && req.body.lists) {
-                data.insert(req.body,
+                board.insert(req.body,
                     function(data){
                         res.send(data);
                     },
@@ -39,8 +39,8 @@ var main = function () {
         }
     );
 
-    server.get('/data/:id', function(req, res) {
-        data.findById(req.params.id, function(data){res.send(data);});
+    server.get('/board/:id', function(req, res) {
+        board.findById(req.params.id, function(data){res.send(data);});
     });
     server.post('/auth', function(req, res) {
         users.authenticate(req.body.username, req.body.password,

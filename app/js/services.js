@@ -1,18 +1,33 @@
 angular.module('services', ['ngResource', 'ngCookies'])
     .service('ListService', ['$resource', function ($resource) {
-        return $resource('/data/:id', {}, {
-                list: {
-                    method: 'GET',
-                    isArray: true
-                },
-                get: {
-                    method: 'GET'
-                },
-                post: {
-                    method: 'POST'
+        return {
+            board : $resource('/board/:id', {}, {
+                    listAll: {
+                        method: 'GET',
+                        isArray: true
+                    },
+                    get: {
+                        method: 'GET'
+                    },
+                    post: {
+                        method: 'POST'
+                    }
                 }
-            }
-        )
+            ),
+            list : $resource('/list/:id', {}, {
+                    listAll : {
+                        method: 'GET',
+                        isArray: true
+                    },
+                    get: {
+                        method: 'GET'
+                    },
+                    post: {
+                        method: 'POST'
+                    }
+                }
+            )
+        }
     }])
     .service('LoginService', ['$location', '$http', '$cookieStore', function (location, http, cookieStore) {
         var self = this;

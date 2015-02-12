@@ -36,52 +36,59 @@ angular.module('controllers', ['services'])
 
     .controller('ListController', ['$scope', 'ListService', 'LoginService', function (scope, listService, loginService) {
         scope.init = function() {
-            console.log(loginService);
-            scope.showModal =  true;
-            console.log(loginService.isLoggedIn());
+            scope.colors = ['default', 'primary', 'info', 'success', 'warning', 'danger'];
             scope.initNewBoard();
             if(loginService.isLoggedIn()) {
-                scope.boards = listService.list({members : loginService.getCurrentUser().username});
+                scope.boards = listService.board.listAll({members : loginService.getCurrentUser().username});
             } else {
                 loginService.redirectToLogin();
             }
         };
 
         scope.initNewBoard = function() {
-            scope.newBoard = {name : null, owners : [loginService.getCurrentUser().username], members : [loginService.getCurrentUser().username], lists : []};
+            scope.newBoard = {name : null, owners : [loginService.getCurrentUser().username], members : [loginService.getCurrentUser().username], lists : [], class : 'primary'};
+            scope.newBoard.newMember = '';
+            scope.newBoard.newOwner = '';
         }
 
-        scope.addOwnerOrMember = function(type) {
-        var list, newObject;
-            if(type === 'owner') {
-                list = 'owners';
-                newObject = 'newOwner';
-            } else {
-                list = 'members';
-                newObject = 'newMember';
-            }
-            if(scope.newBoard[list].indexOf(scope.newBoard[newObject]) == -1) {
-                scope.newBoard[list].push(scope.newBoard[newObject]);
+        scope.addMember = function(element) {
+            if(scope.newBoard.members.indexOf(element) == -1) {
+                scope.newBoard.members.push(element);
                 scope.error = null;
             } else {
-                scope.error = 'Usernames Should Be Unique!'
+                scope.error = 'Username Should Be Unique!'
             }
-            scope.newBoard[newObject] = '';
+            scope.newBoard.newMember = '';
+        };
+
+        scope.addOwner = function(element) {
+            if(scope.newBoard.owners.indexOf(element) == -1) {
+                scope.addMember(element);
+                scope.newBoard.owners.push(element);
+                scope.error = null;
+            } else {
+                scope.error = 'Username Should Be Unique!'
+            }
+            scope.newBoard.newOwner = '';
         };
 
         scope.createBoard = function() {
             if(!scope.newBoard.name || scope.newBoard.name == '') {
                 scope.error = 'Please Fill In Mandatory Details!';
             } else {
+                if(scope.newBoard.newOwner != '') {
+                    scope.addOwner(scope.newBoard.newOwner);
+                }
+                if(scope.newBoard.newMember != '') {
+                    scope.addMember(scope.newBoard.newMember);
+                }
                 scope.newBoard.createdOn = new Date();
                 console.log(scope.newBoard);
                 scope.showModal = false;
                 delete scope.newBoard.newOwner;
                 delete scope.newBoard.newMember;
-                var ret = listService.post(scope.newBoard);
-                scope.initNewBoard();
+                var ret = listService.board.post(scope.newBoard, scope.init);
             }
-
         };
         scope.init();
         scope.name = "List Controller";
@@ -118,7 +125,7 @@ angular.module('controllers', ['services'])
     .controller('BoardController', ['$scope', 'ListService', 'LoginService', '$routeParams', function (scope, listService, loginService, routeParams) {
         scope.init = function() {
             console.log(routeParams);
-            scope.board = listService.get({members : loginService.getCurrentUser().username, id : routeParams.id});
+            scope.board = listService.board.get({members : loginService.getCurrentUser().username, id : routeParams.id});
         };
         scope.init();
 

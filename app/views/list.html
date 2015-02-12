@@ -2,13 +2,13 @@
     <div id="example1" style="margin:2%;width:90%" class="row">
         <h1>Boards</h1>
         <a ng-repeat="board in boards" href="#/board/{{board._id}}">
-            <div class="board overlap col-md-2 label img-rounded label-{{board.class ? board.class : 'primary'}}"
+            <div class="board overlap col-md-2 label label-{{board.class ? board.class : 'primary'}}"
                  title="{{board.name}}">
                 {{board.name}}
             </div>
         </a>
         <a ng-click="showModal = !showModal" href>
-            <div class="board col-md-1 label  img-rounded label-success" title="Create New Board">+</div>
+            <div class="board col-md-1 label img-circle label-success" title="Create New Board">+</div>
         </a>
     </div>
 
@@ -33,7 +33,7 @@
                                ng-model="newBoard.newOwner">
 
                         <div class="input-group-btn">
-                            <button ng-disabled="!newBoard.newOwner" ng-click="addOwnerOrMember('owner')"
+                            <button ng-disabled="!newBoard.newOwner" ng-click="addOwner(newBoard.newOwner)"
                                     class="btn btn-success input-lg">&nbsp;+&nbsp;</button>
                         </div>
                     </div>
@@ -51,9 +51,17 @@
                                ng-model="newBoard.newMember">
 
                         <div class="input-group-btn">
-                            <button ng-disabled="!newBoard.newMember" ng-click="addOwnerOrMember('member')"
+                            <button ng-disabled="!newBoard.newMember" ng-click="addMember(newBoard.newMember)"
                                     class="btn btn-success input-lg">&nbsp;+&nbsp;</button>
                         </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Color :</label>
+
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button ng-repeat="color in colors" type="button" ng-click="newBoard.class = color" class="btn btn-{{color}} input-sm">{{newBoard.class === color ? '&#10003' : ''}}</button>
                     </div>
                 </div>
 

@@ -2,8 +2,6 @@
     margin : 10px;
     padding : 20px;
     font-size : 150%;
-    text-height : 200%;
-    text-align : center;
 }
 
 .overlap {
@@ -30,5 +28,17 @@
 
 .sidebar {
     margin : 0px;
-    padding : 1%;
+    padding : 2%;
+}
+
+.red .active a,
+.red .active a:hover {
+    background-color: red !important;
+}
+
+.text-md {
+    font-size : 110%;
+}
+.text-lg {
+    font-size : 150%;
 }
