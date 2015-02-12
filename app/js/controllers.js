@@ -125,8 +125,36 @@ angular.module('controllers', ['services'])
     .controller('BoardController', ['$scope', 'ListService', 'LoginService', '$routeParams', function (scope, listService, loginService, routeParams) {
         scope.init = function() {
             console.log(routeParams);
-            scope.board = listService.board.get({members : loginService.getCurrentUser().username, id : routeParams.id});
+            scope.initNewList();
+            listService.board.get(
+                {members : loginService.getCurrentUser().username, id : routeParams.id},
+                function(data) {
+                    scope.board = data;
+                    scope.lists = listService.list.listAll({boardId : scope.board._id});
+                }
+            );
         };
+
+        scope.initNewList = function() {
+            scope.newList = {name : null, notes : []};
+        }
+
+        scope.createList = function() {
+            if(!scope.newList.name || scope.newList.name == '') {
+                scope.error = 'Please Fill In Mandatory Details!';
+            } else {
+
+                console.log(scope.newList);
+                scope.showModal = false;
+                var ret = listService.list.post(scope.newList, scope.appendList);
+            }
+        };
+
+        scope.appendList = function(data) {
+            scope.board.lists.push(data._id);
+            listService.board.post(scope.board, scope.init);
+        }
+
         scope.init();
 
     }])

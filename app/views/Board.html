@@ -1,11 +1,36 @@
 <div>
     <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
-            <a ng-repeat="list in board.lists">
-                <div class="board overlap col-md-2" title="{{list.name}}">
-                    {{list.name}}
+
+
+            <a ng-click="showModal = !showModal" href>
+                <div class="col-md-12 center">
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">+</div>
+                    </div>
                 </div>
             </a>
+
+            <div ng-repeat="list in lists" class="col-md-4">
+                <!-- Default panel contents -->
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">{{list.name}}</div>
+                    <a ng-click="edit = true" href>
+                        <div class="panel-body">
+                            <div class="input-lg" ng-show="!edit">{{list.note}}</div>
+
+                            <form ng-show="edit" role="form">
+                                <div class="form-group">
+                                    <textarea class="form-control input-lg" rows="2" ng-blur="edit=false"
+                                              ng-model="list.note" id="comment"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 sidebar img-rounded text-{{board.class && board.class != 'primary' ? board.class : 'default'}} label-{{board.class ? board.class : 'primary'}}">
@@ -17,17 +42,42 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 overlap"><b>Owners:</b></div>
-                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 overlap">{{board.owners.toString()}}</div>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 overlap">
+                    {{board.owners.toString()}}
+                </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 overlap"><b>Members:</b></div>
-                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 overlap">{{board.members.toString()}}</div>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 overlap">
+                    {{board.members.toString()}}
+                </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 overlap"><b>Created On:</b></div>
-                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 overlap">{{board.createdOn |
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 overlap">
+                    {{board.createdOn |
                     date : 'dd MMM yyyy, h:mm a'}}
                 </div>
             </div>
         </div>
-
     </div>
+
+    <modal title="Create New List" visible="showModal">
+        <div>
+            <form role="form" name="createListForm" novalidate method="post">
+                <div class="form-group">
+                    <label class="sr-only">List Name</label>
+                    <input type="text" class="form-control input-lg" placeholder="Type In List Name"
+                           ng-model="newList.name" required/>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="form-control btn btn-primary input-lg" ng-click="createList()"
+                           value="Create"/>
+                </div>
+                <div ng-show="error" class="label-danger input-lg">
+                    {{error}}
+                </div>
+            </form>
+        </div>
+    </modal>
+
 </div>
