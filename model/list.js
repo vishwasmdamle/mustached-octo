@@ -1,6 +1,6 @@
 
 exports.initModel = function() {
-    mongoose.model('List', {name : String, note : String, type : String}, 'content');
+    mongoose.model('List', {name : String, note : String, rowCount : Number, type : String}, 'content');
     contentList = mongoose.model('List');
 }
 
@@ -46,7 +46,7 @@ exports.findByIds = function(ids, callback1) {
 exports.update = function(list, callback1, callback2) {
     if(list._id) {
         list.type = 'board';
-        contentList.update({_id : list._id}, board, function(err, data) {
+        contentList.update({_id : list._id}, list, function(err, data) {
            if(!err) {
                callback1(data);
            } else {

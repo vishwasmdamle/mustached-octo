@@ -61,7 +61,7 @@ var main = function () {
 
     server.post('/list', function(req, res) {
             console.log(req.body);
-            if(req.body && req.body.name && req.body.notes) {
+            if(req.body && req.body.name) {
             var insertOrUpdate = req.body._id ? 'update' : 'insert';
                 list[insertOrUpdate](req.body,
                     function(data){

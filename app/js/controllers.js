@@ -136,7 +136,7 @@ angular.module('controllers', ['services'])
         };
 
         scope.initNewList = function() {
-            scope.newList = {name : null, notes : []};
+            scope.newList = {name : null, note : ''};
         }
 
         scope.createList = function() {
@@ -157,6 +157,24 @@ angular.module('controllers', ['services'])
 
         scope.init();
 
+    }])
+    .controller('NoteController', ['$scope', 'ListService', '$document', function (scope, listService) {
+        scope.rowCount = 0;
+
+        scope.save = function(list) {
+            listService.list.post(list);
+        };
+
+        scope.delete = function(list) {
+            listService.list.delete({id : list._id});
+        };
+        scope.update = function(elementIndex) {
+            var element = angular.element('#list' + elementIndex + '_text');
+            var height = element.css('height').toString().match('[0-9]+');
+            var lineHeight = element.css('line-height').toString().match('[0-9]+');
+            var scrollHeight = element.prop('scrollHeight');
+            if(height < scrollHeight)  scope.rowCount = scope.rowCount + (scrollHeight - height) / lineHeight;
+        };
     }])
     .controller('SignUpController', ['$scope', function (scope) {
         scope.name = "Sign Up Controller";

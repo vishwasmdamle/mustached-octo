@@ -12,23 +12,18 @@
                 </div>
             </a>
 
-            <div ng-repeat="list in lists" class="col-md-4">
-                <!-- Default panel contents -->
+            <div ng-repeat="list in lists" ng-controller="NoteController" class="col-md-4">
                 <div class="panel panel-default">
-
                     <div class="panel-heading">{{list.name}}</div>
-                    <a ng-click="edit = true" href>
-                        <div class="panel-body">
-                            <div class="input-lg" ng-show="!edit">{{list.note}}</div>
-
-                            <form ng-show="edit" role="form">
-                                <div class="form-group">
-                                    <textarea class="form-control input-lg" rows="2" ng-blur="edit=false"
-                                              ng-model="list.note" id="comment"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                    </a>
+                    <div class="panel-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <textarea class="form-control input-lg note" rows="{{rowCount}}"
+                                          ng-keyup="update($index)" ng-focus="update($index)" ng-blur="save(list)"
+                                          id="list{{$index}}_text" ng-model="list.note"></textarea>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
