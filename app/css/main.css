@@ -17,6 +17,13 @@
     color : #222222;
 }
 
+.sign-up {
+    padding : 3%;
+    margin-top : 4%;
+    background-color : #222222;
+    color : #222222;
+}
+
 .logo-thumbnail {
     height: 20px;
     float: left;
@@ -29,11 +36,6 @@
 .sidebar {
     margin : 0px;
     padding : 2%;
-}
-
-.red .active a,
-.red .active a:hover {
-    background-color: red !important;
 }
 
 .text-md {
@@ -59,4 +61,14 @@
   padding: 4px 0;
   font-size: 8px;
   border-radius: 10px;
+}
+
+.red-alert-sign {
+color: #d9534f;
+font-size: 150%;
+}
+
+.green-valid-sign {
+color: #5cb85c;
+font-size: 150%;
 }

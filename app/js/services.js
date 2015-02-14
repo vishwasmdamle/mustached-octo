@@ -11,6 +11,9 @@ angular.module('services', ['ngResource', 'ngCookies'])
                     },
                     post: {
                         method: 'POST'
+                    },
+                    delete: {
+                        method: 'DELETE'
                     }
                 }
             ),
@@ -24,6 +27,9 @@ angular.module('services', ['ngResource', 'ngCookies'])
                     },
                     post: {
                         method: 'POST'
+                    },
+                    delete: {
+                        method: 'DELETE'
                     }
                 }
             )
@@ -57,6 +63,18 @@ angular.module('services', ['ngResource', 'ngCookies'])
                 }
             )
             .error(failure);
+         };
+
+        self.validateUsername = function(username, success, failure) {
+            http.get('/username/' + username)
+                .success(success)
+                .error(failure);
+         };
+
+        self.createUser = function(user, success, failure) {
+            http.post('/user', user)
+                .success(success)
+                .error(failure);
          };
 
          self.getCurrentUser = function() {

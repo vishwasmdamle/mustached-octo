@@ -23,7 +23,6 @@ angular.module('controllers', ['services'])
 
         this.isVisible = function(menu) {
             if(!menu || menu.authRequired === null) return false;
-//            console.log('authState ' + loginService.isLoggedIn() + ' menu.auth ' + menu.authRequired + ' menu.name ' + menu.name + ' ret ' + (this.authState === menu.authRequired));
             return(loginService.isLoggedIn() === menu.authRequired);
         }
 
@@ -37,9 +36,9 @@ angular.module('controllers', ['services'])
     .controller('ListController', ['$scope', 'ListService', 'LoginService', function (scope, listService, loginService) {
         scope.init = function() {
             scope.colors = ['default', 'primary', 'info', 'success', 'warning', 'danger'];
-            scope.initNewBoard();
             if(loginService.isLoggedIn()) {
                 scope.boards = listService.board.listAll({members : loginService.getCurrentUser().username});
+                scope.initNewBoard();
             } else {
                 loginService.redirectToLogin();
             }
@@ -49,6 +48,10 @@ angular.module('controllers', ['services'])
             scope.newBoard = {name : null, owners : [loginService.getCurrentUser().username], members : [loginService.getCurrentUser().username], lists : [], class : 'primary'};
             scope.newBoard.newMember = '';
             scope.newBoard.newOwner = '';
+        }
+
+        scope.delete = function(board) {
+            listService.board.delete({id : board._id}, scope.init);
         }
 
         scope.addMember = function(element) {
@@ -154,6 +157,10 @@ angular.module('controllers', ['services'])
             scope.board.lists.push(data._id);
             listService.board.post(scope.board, scope.init);
         }
+        scope.deleteList = function(id) {
+            scope.board.lists.splice(scope.board.lists.indexOf(id), 1);
+            listService.board.post(scope.board, scope.init);
+        }
 
         scope.init();
 
@@ -166,7 +173,11 @@ angular.module('controllers', ['services'])
         };
 
         scope.delete = function(list) {
-            listService.list.delete({id : list._id});
+            listService.list.delete({id : list._id},
+                function() {
+                    scope.$parent.deleteList(list._id);
+                }
+            );
         };
         scope.update = function(elementIndex) {
             var element = angular.element('#list' + elementIndex + '_text');
@@ -176,8 +187,34 @@ angular.module('controllers', ['services'])
             if(height < scrollHeight)  scope.rowCount = scope.rowCount + (scrollHeight - height) / lineHeight;
         };
     }])
-    .controller('SignUpController', ['$scope', function (scope) {
-        scope.name = "Sign Up Controller";
+    .controller('SignUpController', ['$scope', 'LoginService', function (scope, loginService) {
+        loginService.invalidate();
+
+        scope.validateUsername =function(username) {
+            console.log('validating');
+            loginService.validateUsername(username,
+                function() {
+                    scope.duplicateUsernameError = false;
+                    scope.validUsername = true;
+                },
+                function() {
+                    scope.validUsername = false;
+                    scope.duplicateUsernameError = true;
+                }
+            );
+        }
+
+        scope.createUser =function(name, username, password) {
+            console.log('creating');
+            var newUser = {username : username, name : name, password : password};
+            loginService.createUser(newUser,
+                function() {
+                    console.log('created');
+                    loginService.redirectToLogin();
+                },
+                function() {console.log('failed');}
+            );
+        }
     }]);
 
 

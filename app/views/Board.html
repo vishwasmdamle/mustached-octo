@@ -14,7 +14,9 @@
 
             <div ng-repeat="list in lists" ng-controller="NoteController" class="col-md-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{list.name}}</div>
+                    <div class="panel-heading">{{list.name}}<a href ng-click="delete(list)"
+                                                               class="pull-right btn btn-danger btn-circle">X</a>
+                    </div>
                     <div class="panel-body">
                         <form role="form">
                             <div class="form-group">
