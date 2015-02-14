@@ -29,8 +29,11 @@
                         controller: 'SignUpController',
                         caseInsensitiveMatch: true
                     }).
+                    when('/cover', {
+                        templateUrl: 'views/home.html',
+                    }).
                     otherwise({
-                        redirectTo: '/home'
+                        redirectTo: '/cover'
                     });
             }]);
 }

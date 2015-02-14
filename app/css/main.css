@@ -11,15 +11,15 @@
 }
 
 .login {
-    padding : 10%;
+    padding : 5%;
     margin-top : 10%;
     background-color : #222222;
     color : #222222;
 }
 
 .sign-up {
-    padding : 3%;
-    margin-top : 4%;
+    padding : 5%;
+    margin-top : 10%;
     background-color : #222222;
     color : #222222;
 }
@@ -71,4 +71,10 @@ font-size: 150%;
 .green-valid-sign {
 color: #5cb85c;
 font-size: 150%;
+}
+
+.home-background {
+    margin-top : -20px;
+    height : 100%;
+    width : 100%;
 }
