@@ -11,7 +11,7 @@
                 &nbsp;{{navigation.brand.name}}
             </a>
         </div>
-        <div class="collapse navbar-collapse" id="navbar">
+        <div class="collapse navbar-collapse" id="navbar" data-toggle="collapse" data-target="#navbar">
             <ul ng-repeat="menu in navigation.leftMenus" class="nav navbar-nav">
                 <li ng-show="navigation.isVisible({{menu}})" ng-class="{active : navigation.isActive('{{menu.path}}')}">
                     <a href="#/{{menu.path}}"><span ng-show="menu.class" class="glyphicon {{menu.class}}"> </span>

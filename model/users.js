@@ -27,12 +27,8 @@ exports.authenticate = function(username, password, success, failure) {
 }
 
 exports.findByUsername = function(username, success, failure) {
-        console.log(username);
        user.find({username : username},
         function(err, data){
-            console.log(data);
-            console.log(success);
-            console.log(failure);
             if(data.length > 0) {
                 if(failure)
                     failure();

@@ -14,10 +14,11 @@ exports.connect = function() {
 
 
 success = function () {
-    console.log('Mongoose connected to ' + DBName + ' db on ' + server + '...');
+    console.info('Mongoose connected to ' + DBName + ' db on ' + server + '...');
 };
 
 failure = function (e) {
-    console.log('Failed to connect Mongoose...');
+    console.info('Failed to connect Mongoose...');
+    process.exit(0);
 };
 exports.connect();

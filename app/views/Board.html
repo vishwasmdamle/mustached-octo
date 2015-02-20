@@ -1,12 +1,9 @@
 <div>
     <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
-
-
+        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
             <a ng-click="showModal = !showModal" href>
                 <div class="col-md-12 center">
                     <div class="panel panel-default">
-
                         <div class="panel-heading">+</div>
                     </div>
                 </div>
@@ -30,7 +27,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 sidebar img-rounded text-{{board.class && board.class != 'primary' ? board.class : 'default'}} label-{{board.class ? board.class : 'primary'}}">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-10 pull-right sidebar img-rounded text-{{board.class && board.class != 'primary' ? board.class : 'default'}} label-{{board.class ? board.class : 'primary'}}">
             <div class="row">
                 <div class="col-lg-12 center overlap text-lg" title="{{board.name}}"><b>{{board.name}}</b></div>
 

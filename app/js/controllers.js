@@ -4,7 +4,6 @@ angular.module('controllers', ['services'])
             this.leftMenus = leftMenus;
             this.rightMenus = rightMenus;
             this.brand = brand;
-            console.log('auth ' + this.authState);
         };
 
         this.isLoggedIn = function() {
@@ -86,7 +85,6 @@ angular.module('controllers', ['services'])
                     scope.addMember(scope.newBoard.newMember);
                 }
                 scope.newBoard.createdOn = new Date();
-                console.log(scope.newBoard);
                 scope.showModal = false;
                 delete scope.newBoard.newOwner;
                 delete scope.newBoard.newMember;
@@ -99,7 +97,6 @@ angular.module('controllers', ['services'])
 
     .controller('LoginController', ['$scope', 'LoginService', '$location', function (scope, loginService, location) {
         if(location.path() === '/logout') {
-            console.log('logout');
             loginService.logout();
             location.path('login');
         }
@@ -108,14 +105,12 @@ angular.module('controllers', ['services'])
             return;
         }
         scope.authenticate = function(username, password) {
-            console.log(username + password);
             if(username && password) {
                 loginService.authenticate(username, password,
                     function() {
                         location.path('list');
                     },
                     function(data) {
-                        console.log(data);
                         scope.error = data.error;
                     }
                 );
@@ -127,7 +122,6 @@ angular.module('controllers', ['services'])
 
     .controller('BoardController', ['$scope', 'ListService', 'LoginService', '$routeParams', function (scope, listService, loginService, routeParams) {
         scope.init = function() {
-            console.log(routeParams);
             scope.initNewList();
             listService.board.get(
                 {members : loginService.getCurrentUser().username, id : routeParams.id},
@@ -146,8 +140,6 @@ angular.module('controllers', ['services'])
             if(!scope.newList.name || scope.newList.name == '') {
                 scope.error = 'Please Fill In Mandatory Details!';
             } else {
-
-                console.log(scope.newList);
                 scope.showModal = false;
                 var ret = listService.list.post(scope.newList, scope.appendList);
             }
@@ -191,7 +183,6 @@ angular.module('controllers', ['services'])
         loginService.invalidate();
 
         scope.validateUsername =function(username) {
-            console.log('validating');
             loginService.validateUsername(username,
                 function() {
                     scope.duplicateUsernameError = false;
@@ -205,14 +196,12 @@ angular.module('controllers', ['services'])
         }
 
         scope.createUser =function(name, username, password) {
-            console.log('creating');
             var newUser = {username : username, name : name, password : password};
             loginService.createUser(newUser,
                 function() {
-                    console.log('created');
                     loginService.redirectToLogin();
                 },
-                function() {console.log('failed');}
+                function() {}
             );
         }
     }]);

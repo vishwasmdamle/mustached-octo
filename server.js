@@ -5,14 +5,12 @@ var main = function () {
     exports.path = require('path');
     exports.port = setPort(process);
 
+    require('./mongoose.js');
     serverService = require('./expressService.js');
     bodyParser = require('body-parser');
-    dbService = require('./mongoose.js');
-    dbService = require('./mongoose.js');
     board = require('./model/board.js');
     list = require('./model/list.js');
     users = require('./model/users.js');
-    dbService = require('./model/users.js');
     encryption = require('./authentication.js');
 
     server = serverService.initServer();
@@ -129,7 +127,6 @@ var main = function () {
     });
 
     server.post('/user', function(req, res) {
-        console.log(req.body);
         if(req.body && req.body.username && req.body.password) {
             users.insert(req.body,
                 function() {

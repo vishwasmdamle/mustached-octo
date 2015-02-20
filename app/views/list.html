@@ -2,7 +2,7 @@
     <div id="example1" style="margin:2%;width:90%" class="row">
         <h1>Boards</h1>
         <a ng-repeat="board in boards" ng-href="{{redirect}}" ng-init="redirect = '#/board/' + board._id">
-                <div ng-mouseover="hover = true" ng-mouseleave="hover = false" class="board overlap col-md-2 label label-{{board.class ? board.class : 'primary'}}"
+                <div ng-mouseover="hover = true" ng-mouseleave="hover = false" class="board overlap col-lg-2 col-md-2 col-sm-4 col-xs-8 label label-{{board.class ? board.class : 'primary'}}"
                      title="{{board.name}}">
                     <div ng-hide="hover" class="overlap">
                         {{board.name}}
@@ -16,7 +16,7 @@
                 </div>
         </a>
         <a ng-click="showModal = !showModal" href>
-            <div class="board col-md-1 label img-circle label-success" title="Create New Board">+</div>
+            <div class="board col-lg-1 col-md-1 col-sm-2 col-xs-4 label img-circle label-success" title="Create New Board">+</div>
         </a>
     </div>
 

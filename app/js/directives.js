@@ -14,9 +14,7 @@ angular.module('directives', [])
            scope:true,
            link: function postLink(scope, element, attrs) {
              scope.title = attrs.title;
-             console.log(attrs);
              scope.$watch(attrs.visible, function(value){
-                console.log('watch change');
                if(value == true)
                  $(element).modal('show');
                else

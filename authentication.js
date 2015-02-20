@@ -6,6 +6,5 @@ exports.encrypt = function(string) {
 };
 
 exports.compare = function(string, hash) {
-    console.log('string and hash ' + string + hash);
     return bcrypt.compareSync(string, hash);
 }
