@@ -12,14 +12,12 @@
 
 .login {
     padding : 5%;
-    margin-top : 10%;
     background-color : #222222;
     color : #222222;
 }
 
 .sign-up {
     padding : 5%;
-    margin-top : 10%;
     background-color : #222222;
     color : #222222;
 }
@@ -77,4 +75,11 @@ font-size: 150%;
     margin-top : -20px;
     height : 100%;
     width : 100%;
+}
+
+.vcenter {
+     min-height: 80%;
+     min-height: 80vh;
+     display: flex;
+     align-items: center;
 }
